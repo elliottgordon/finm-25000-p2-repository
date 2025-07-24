@@ -15,7 +15,7 @@ class OrderManagementSystem:
         # optional matching engine to forward orders
         self.matching_engine = matching_engine
 
-    def new_order(self, order: Order) -> str:
+    def new_order(self, order: Order) -> dict:
         """
         Validates and stores a new order.
 
@@ -36,7 +36,7 @@ class OrderManagementSystem:
             raise ValueError("Limit/stop orders must have a price specified")
         
         # Timestamp if not provided
-        now = datetime.utcnow()
+        now = datetime.now(datetime.UTC)
         order.timestamp = order.timestamp or now
 
         # Save order & status
@@ -47,7 +47,70 @@ class OrderManagementSystem:
         if self.matching_engine:
             self.matching_engine.add_order(order)
 
+        # Acknowledge order
         return {"order_id": order.id, 
                 "status": "accepted",
                 "timestamp": order.timestamp
                 }
+
+    def cancel_order(self, order_id: str) -> dict:
+        """
+        Cancels an existing order.
+
+        Arguments:
+            order_id (str): The unique identifier for the order to be canceled
+
+        Returns:
+            Dict[str, str]: Acknowledgment of the cancellation
+        """
+        if order_id not in self._orders:
+            raise KeyError("Order not found")
+
+        status = self._statuses[order_id]
+        if status in ("canceled", "filled"):
+            raise ValueError(f"Cannot cancel order in status {status}")
+        self._statuses[order_id] = 'canceled'
+
+        return{
+            "order_id": order_id,
+            "status": "canceled",
+            "timestamp": datetime.now(datetime.UTC)
+        }
+
+    def amend_order(self, order_id: str, new_qty: Optional[int] = None, new_price: Optional[float] = None) -> dict:
+        """
+        Amends an existing order.
+
+        Arguments:
+            order_id (str): The unique identifier for the order to be amended
+            new_order (Order): The new order details
+
+        Returns:
+            Dict[str, str]: Acknowledgment of the amendment
+        """
+        if order_id not in self._orders:
+            raise KeyError("Order not found")
+
+        status = self._statuses[order_id]
+
+        if status not in ("accepted"):
+            raise ValueError(f"Cannot amend order in status {status}")
+
+        order = self._orders[order_id]
+
+        if new_qty is not None:
+            if new_qty <= 0:
+                raise ValueError("Quantity must be greater than 0")
+            order.quantity = new_qty
+        if new_price is not None:
+            if order.type not in ("limit", "stop"):
+                raise ValueError("Only limit or stop orders can change price")
+            order.price = new_price
+        
+        order.timestamp = datetime.now(datetime.UTC)
+
+        return {
+            "order_id": order.id,
+            "status": "amended",
+            "timestamp": order.timestamp
+        }
