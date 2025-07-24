@@ -1,8 +1,8 @@
 # order.py
-
 from dataclasses import dataclass
 from datetime import datetime
 
+@dataclass
 class Order:
     """
     Represents a single trade instruction.
