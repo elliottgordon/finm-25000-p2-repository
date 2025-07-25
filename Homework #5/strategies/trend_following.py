@@ -18,3 +18,12 @@ def run_backtest(symbol: str, interval: str, period: str, short_window: int, lon
 
     history["ma_short"] = history["last_price"].rolling(window=short_window).mean()
     history["ma_long"] = history["last_price"].rolling(window=long_window).mean()
+
+    # Assume no trade at first
+    signal = 0
+    if history['ma_short'] > history['ma_long']:
+        # Generate buy signal
+        signal = 1
+    elif history['ma_short'] < history['ma_long']:
+        # Generate sell signal
+        signals = -1
