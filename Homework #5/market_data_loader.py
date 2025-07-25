@@ -11,7 +11,7 @@ class MarketDataLoader:
     """
     A class to load and cache market data from Yahoo Finance.
     """
-    def __init__(self, interval: str = "1d", period: str = "1y"):
+    def __init__(self, interval: str = "1d", period: str = "5y"):
         self.interval = interval
         self.period = period
         self.ohlcv_cache: Dict[str, pd.DataFrame] = {}
