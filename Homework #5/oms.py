@@ -1,7 +1,7 @@
 # oms.py
 
 from order import Order
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Optional
 
 class OrderManagementSystem:
@@ -36,7 +36,7 @@ class OrderManagementSystem:
             raise ValueError("Limit/stop orders must have a price specified")
         
         # Timestamp if not provided
-        now = datetime.now(datetime.UTC)
+        now = datetime.now(tz=timezone.utc)
         order.timestamp = order.timestamp or now
 
         # Save order & status
@@ -74,7 +74,7 @@ class OrderManagementSystem:
         return{
             "order_id": order_id,
             "status": "canceled",
-            "timestamp": datetime.now(datetime.UTC)
+            "timestamp": datetime.now(tz=timezone.utc)
         }
 
     def amend_order(self, order_id: str, new_qty: Optional[int] = None, new_price: Optional[float] = None) -> dict:
@@ -107,7 +107,7 @@ class OrderManagementSystem:
                 raise ValueError("Only limit or stop orders can change price")
             order.price = new_price
         
-        order.timestamp = datetime.now(datetime.UTC)
+        order.timestamp = datetime.now(tz=timezone.utc)
 
         return {
             "order_id": order.id,
