@@ -1,5 +1,6 @@
 import pandas as pd
 from typing import List, Dict
+from datetime import datetime
 
 class PositionTracker:
     """
@@ -10,6 +11,8 @@ class PositionTracker:
         self.positions: Dict[str, int] = {}
         # Cash balance
         self.cash: float = starting_cash
+        # Starting cash for reference
+        self.starting_cash: float = starting_cash
         # List of trade records (one dict per fill)
         self.blotter: List[Dict] = []
 
@@ -37,7 +40,7 @@ class PositionTracker:
         self.positions[symbol] = self.positions.get(symbol, 0) + delta
 
         # Update cash
-        # Clash flows negative for buys (cash out), positive for sells
+        # Cash flows negative for buys (cash out), positive for sells
         cash_flow = -qty * price if side == 'buy' else qty * price
         self.cash += cash_flow
 
@@ -57,6 +60,9 @@ class PositionTracker:
         Returns a DataFrame of all fills with columns:
             timestamp, symbol, side, quantity, price, cash_flow
         """
+        if not self.blotter:
+            # Return empty DataFrame with correct columns
+            return pd.DataFrame(columns=["timestamp", "symbol", "side", "quantity", "price", "cash_flow"])
         return pd.DataFrame(self.blotter)
     
     def get_pnl_summary(self, current_prices: Dict[str, float] = None) -> Dict:
@@ -69,18 +75,26 @@ class PositionTracker:
         - 'positions': copy of self.positions dict
         """
         blotter_df = self.get_blotter()
-        realized_pnl = blotter_df["cash_flow"].sum()
+        
+        # Handle empty blotter case
+        if blotter_df.empty:
+            realized_pnl = 0.0
+        else:
+            realized_pnl = blotter_df["cash_flow"].sum()
 
         unrealized_pnl = 0.0
         if current_prices:
             for sym, pos in self.positions.items():
                 if pos != 0:
                     current_price = current_prices.get(sym, 0.0)
-                    market_value += pos * current_price
+                    market_value = pos * current_price  # Fix: initialize market_value
 
                     # Cost basis = sum of cash flows for this symbol
-                    trades = blotter_df[blotter_df['symbol'] == sym]
-                    cost_basis = -trades['cash_flow'].sum()
+                    if not blotter_df.empty:
+                        trades = blotter_df[blotter_df['symbol'] == sym]
+                        cost_basis = -trades['cash_flow'].sum()
+                    else:
+                        cost_basis = 0
 
                     unrealized_pnl += market_value - cost_basis
 
