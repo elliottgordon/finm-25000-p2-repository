@@ -10,13 +10,20 @@ from datetime import datetime
 from market_data_loader import MarketDataLoader
 from typing import List, Dict, Tuple
 
-def run_backtest(symbol: str, 
-                 interval: str, 
-                 period: str, 
-                 short_window: int, 
-                 long_window: int) -> Tuple[pd.DataFrame, list, dict]:
+def run_backtest(
+        history: pd.DataFrame,
+        short_window: int = 20,
+        long_window: int = 50,
+        risk_params: dict,
+):
     """
-    
+    Runs a backtest for a trend-following strategy using moving averages.
+
+    Args:
+        history (pd.DataFrame): Historical market data with 'last_price' column.
+        risk_params (dict): Risk parameters including 'symbol', 'quantity', etc.
+        short_window (int): Short moving average window.
+        long_window (int): Long moving average window.
     """
     # Load data and compute moving averages
     market_data_loader = MarketDataLoader(interval=interval, period=period)
@@ -32,7 +39,7 @@ def run_backtest(symbol: str,
     
     # Generate signals based on moving average crossovers
     # When ma_short crosses above ma_long, we buy
-    
+
 
     # When ma_short crosses above ma_long, we buy
     history.loc[history["ma_short"] > history["ma_long"], "signal"] = 1
