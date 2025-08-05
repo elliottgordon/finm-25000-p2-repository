@@ -1,0 +1,8 @@
+Metric,Unhedged,Hedged,Improvement
+Annualized Return (%),15.95,16.08,+0.13
+Annualized Volatility (%),17.06,16.29,-0.77
+Sharpe Ratio,0.818,0.864,+0.046
+Maximum Drawdown (%),-23.90,-21.12,+2.78
+VaR 95% (%),-1.66,-1.56,+0.10
+Skewness,-0.117,-0.125,-0.007
+Kurtosis,5.047,5.487,+0.440
