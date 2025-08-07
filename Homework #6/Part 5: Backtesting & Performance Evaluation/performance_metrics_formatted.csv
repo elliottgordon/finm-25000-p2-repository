@@ -1,5 +1,0 @@
-,Annualized Return,Annualized Volatility,Sharpe Ratio,Sortino Ratio,Calmar Ratio,Maximum Drawdown,Rolling Sharpe Ratio,Hit Rate,Win/Loss Ratio,Time in Drawdown,Recovery Time,Skewness,Kurtosis,VaR (95%),CVaR (95%)
-Unhedged,14.832%,17.110%,0.867,1.184,0.627,-23.673%,1.149,54.079%,0.994,87.553%,15.0 days,-0.112,5.139,-1.689%,-2.484%
-Unhedged (Net),14.844%,17.111%,0.867,1.185,0.627,-23.673%,1.149,54.079%,0.994,87.553%,15.0 days,-0.111,5.138,-1.689%,-2.484%
-Hedged,-0.311%,4.718%,-0.066,-0.103,-0.032,-9.657%,-0.131,51.051%,0.952,97.897%,33.1 days,0.205,2.429,-0.504%,-0.641%
-Hedged (Net),-0.322%,4.719%,-0.068,-0.107,-0.033,-9.675%,-0.133,51.051%,0.952,97.981%,22.9 days,0.205,2.428,-0.504%,-0.641%
