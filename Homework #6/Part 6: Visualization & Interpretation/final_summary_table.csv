@@ -1,8 +1,5 @@
-Metric,Unhedged,Hedged,Improvement
-Annualized Return (%),14.57,0.43,-14.14
-Annualized Volatility (%),17.13,4.52,-12.61
-Sharpe Ratio,0.733,-0.348,-1.082
-Maximum Drawdown (%),-23.67,-8.64,+15.03
-VaR 95% (%),-1.70,-0.48,+1.23
-Skewness,-0.139,0.236,+0.375
-Kurtosis,4.882,2.343,-2.539
+Portfolio,Total_Return_%,Sharpe_Ratio,Volatility_%
+Unhedged (Gross),91.36,0.850,17.13
+Unhedged (Net),91.41,0.850,17.14
+Hedged (Gross),1.62,0.094,4.52
+Hedged (Net),-36.72,-1.571,5.77
