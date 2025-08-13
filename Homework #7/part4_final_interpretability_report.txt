@@ -16,17 +16,17 @@ METHODOLOGY:
 MODEL PERFORMANCE RESULTS:
 
 REGRESSION MODEL (Random Forest):
-• R² Score: -0.1263 ± 0.1649
-• Root Mean Square Error: 0.022462
-• Mean Absolute Error: 0.017398
-• Mean Square Error: 0.000542
+• R² Score: -0.1362 ± 0.2008
+• Root Mean Square Error: 0.022598
+• Mean Absolute Error: 0.017488
+• Mean Square Error: 0.000553
 
 CLASSIFICATION MODEL (Support Vector Machine):
-• Accuracy: 53.5%
-• Precision: 0.629
-• Recall: 0.658
-• F1-Score: 0.643
-• Area Under Curve (AUC): 0.505
+• Accuracy: 53.8%
+• Precision: 0.640
+• Recall: 0.629
+• F1-Score: 0.635
+• Area Under Curve (AUC): 0.535
 
 INTERPRETABILITY ANALYSIS:
 • Feature importance analysis reveals key predictive factors
@@ -59,6 +59,6 @@ FILES GENERATED:
 • part4_feature_importance_classification.csv - SVM feature rankings
 • part4_comprehensive_model_evaluation.png - Complete visualizations
 
-Analysis completed: 2025-08-09 18:26:03
+Analysis completed: 2025-08-13 16:21:42
 Model validation approach ensures realistic performance expectations.
 ================================================================
